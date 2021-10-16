@@ -22,17 +22,17 @@ if __name__ == '__main__':
     async def repeat_message(event: MessageEvent):
         if event.sender.id in [2107665794]:
             return
-        q = re.sub(u"([^\u4e00-\u9fa5])", "", str(event.message_chain))
-        if len(q) < 15:
+        print(re.search('[0-9a-zA-Z]{11}', str(event.message_chain)))
+        if (not re.search('[0-9a-zA-Z]{11}', str(event.message_chain))) and At(bot.qq) not in event.message_chain:
             return
-        find_req.q = q
+        find_req.q = re.sub(u"([^\u4e00-\u9fa5])", "", str(event.message_chain))
         try:
             cnt = 0
             for i in find_req.getResponse()['tbk_dg_material_optional_response']['result_list']['map_data']:
                 # await bot.send(event, i['title'] + ' https:' + i['url'])
                 try:
                     ring_req.url = 'https:' + i['url']
-                    await bot.send(event, ring_req.getResponse()['tbk_tpwd_create_response']['data']['model'])
+                    await bot.send(event, ring_req.getResponse()['tbk_tpwd_create_response']['data']['model'], quote=True)
                 except Exception as e:
                     return bot.send(event, str(e))
                 cnt += 1
