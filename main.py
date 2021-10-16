@@ -20,10 +20,9 @@ if __name__ == '__main__':
 
     @bot.on(MessageEvent)
     async def repeat_message(event: MessageEvent):
-        if event.sender.id in [2107665794]:
+        if event.sender.id in [2107665794, 1357495247, 2656227409]:
             return
-        print(re.search('[0-9a-zA-Z]{11}', str(event.message_chain)))
-        if (not re.search('[0-9a-zA-Z]{11}', str(event.message_chain))) and At(bot.qq) not in event.message_chain:
+        if (not (re.search('[0-9a-zA-Z]{11}', str(event.message_chain)) and len(str(event.message_chain)) > 11)) and (At(bot.qq) not in event.message_chain):
             return
         find_req.q = re.sub(u"([^\u4e00-\u9fa5])", "", str(event.message_chain))
         try:
