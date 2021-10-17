@@ -13,7 +13,7 @@ if __name__ == '__main__':
     find_req = top.api.TbkDgMaterialOptionalRequest()
     find_req.set_app_info(top.appinfo('33082016', 'df6564cdf0c69b64581f915c4b770324'))
     find_req.adzone_id = '111713900272'
-    find_req.sort = 'match_des'
+    # find_req.sort = 'match_des'
 
     ring_req = top.api.TbkTpwdCreateRequest()
     ring_req.set_app_info(top.appinfo('33082016', 'df6564cdf0c69b64581f915c4b770324'))
@@ -27,7 +27,14 @@ if __name__ == '__main__':
         if At(bot.qq) in event.message_chain:
             find_req.q = str(event.message_chain[Plain])
         else:
-            find_req.q = re.sub(u"([^\u4e00-\u9fa5])", "", str(event.message_chain[Plain]))
+            # find_req.q = re.sub(u"([^\u4e00-\u9fa5])", "", str(event.message_chain[Plain]))
+            # find_req.q = re.search(u'[\u4e00-\u9fa5a-z0-9A-Z]+$', str(event.message_chain[Plain]))
+            split_strings = str(event.message_chain[Plain]).split()
+            find_req.q = ''
+            for i in split_strings:
+                if len(re.sub(u"([^\u4e00-\u9fa5])", "", i)) > 3:
+                    find_req.q += i
+
         try:
             cnt = 0
             for i in find_req.getResponse()['tbk_dg_material_optional_response']['result_list']['map_data']:
